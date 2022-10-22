@@ -1,5 +1,6 @@
 # GIT PULL, GIT ADD/COMMIT/PUSH, and PULL REQUEST FREQUENTLY!!!
 ## don't work on others' scripts unless its been communicated
+### [how to fork and pull request](https://github.com/xonq/git_chmods/blob/main/notes/forking_and_pull_requesting.md)
 
 Please find your test data in your respective section under `main/`.
 

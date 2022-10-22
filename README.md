@@ -1,3 +1,6 @@
+# GIT PULL, GIT ADD/COMMIT/PUSH, and PULL REQUEST FREQUENTLY!!!
+## don't work on others' scripts unless its been communicated
+
 Please find your test data in your respective section under `main/`.
 
 

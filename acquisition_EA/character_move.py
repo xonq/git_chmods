@@ -96,6 +96,8 @@ while run:
 	
 	seqfound = hero.rect.colliderect(wildseq.rect)
 	if seqfound:
+		screen.fill((250, 250, 250))
+		text = font
 		print('collision')
 	brokenseqfound = hero.rect.colliderect(wildbrokenseq.rect)
 	if brokenseqfound:

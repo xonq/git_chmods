@@ -2,10 +2,7 @@
 import pygame
 import random
 
-WHITE = (255, 255, 255)
-green= (124, 252, 0)
-width=640 
-height=480
+
 
 class SpriteSheet(object):
     def __init__(self, file_name):
@@ -92,6 +89,7 @@ class Player(pygame.sprite.Sprite):
         self.face_DN = []
 
         self.direction = "D"
+        self.trail = set()
 
         #make pull randomly from each list? or cycle
         #right facing snakes
@@ -139,13 +137,13 @@ class Player(pygame.sprite.Sprite):
             self.face_DN.append(pygame.transform.flip(obj, False, True))
        # scale up
         for obj in self.face_L:
-            self.face_L2.append(pygame.transform.scale(obj, [40, 40]))
+            self.face_L2.append(pygame.transform.scale(obj, [50, 50]))
         for obj in self.face_R:
-            self.face_R2.append(pygame.transform.scale(obj, [40, 40]))
+            self.face_R2.append(pygame.transform.scale(obj, [50, 50]))
         for obj in self.face_UP:
-            self.face_UP2.append(pygame.transform.scale(obj, [40, 40]))
+            self.face_UP2.append(pygame.transform.scale(obj, [50, 50]))
         for obj in self.face_DN:
-            self.face_DN2.append(pygame.transform.scale(obj, [40, 40]))
+            self.face_DN2.append(pygame.transform.scale(obj, [50, 50]))
         
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
@@ -156,6 +154,9 @@ class Player(pygame.sprite.Sprite):
         # Set speed vector
         self.change_x = 0
         self.change_y = 0
+        WHITE = (255, 255, 255)
+        green= (124, 252, 0)
+
     
     #for each change in position, change:    
     def update(self):
@@ -174,6 +175,18 @@ class Player(pygame.sprite.Sprite):
             frame = (self.rect.y//30) % len(self.face_DN2)
             self.image = self.face_DN2[frame]
         #keep on screen
+        
+        pos = self.rect.center
+        print(pos)
+        if self.trail:
+            if self.trail[-1] != pos:
+                self.trail.append(pos)
+        else:
+            self.trail = [pos, pos]
+        print(self.trail)
+
+        width=640 
+        height=480
         if self.rect.x <0:
             self.rect.x = 0
         if self.rect.x > width -1:
@@ -184,11 +197,11 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = height -1 
         
         #sprite coordinates
-        sprite_coord_list = []
-        sprite_coord = ()
-        sprite_coord = (self.rect.x, self.rect.y)
-        sprite_coord_list.append(sprite_coord)
-        print(f'coordinates are {sprite_coord_list}')
+#        self.sprite_coord_list = []
+#        self.sprite_coord = ()
+ #       self.sprite_coord = (self.rect.x, self.rect.y)
+  #      self.sprite_coord_list.append(self.sprite_coord)
+   #     print(f'coordinates are {self.sprite_coord_list}')
 
 
     def go_left(self):
@@ -211,30 +224,56 @@ class Player(pygame.sprite.Sprite):
         self.change_x = 0
         self.change_y = 0
 
+LEFT, CENTER, RIGHT = range(3)
+TOP, MIDDLE, BOTTOM = range(3)
+
 #Define class for dna trail
 class Trail(pygame.sprite.Sprite):
-    def __init__ (self, sprite):
-        super().__init__()
+    def __init__(self, screen, text='text', pos=(0, 0), pos_rel=(LEFT, TOP),
+                 font=None, size=20, color=(0, 0, 0), antialias=True):
+        
+        pygame.sprite.Sprite.__init__(self)
+        self.font = pygame.font.Font(font, size)
+        
+        self.color = color
+        self.text = text
+        self.pos = pos
+        self.pos_rel = pos_rel
+        self.screen = screen
+        self.antialias = antialias
 
-        
-        
+        self.rerender()
+
+
+    def update(self):
+        pass
+
+    def calculate_position(self):
+        return (
+            self.pos_rel[0]*(self.screen.get_size()[0]/2 - self.rect.width/2)
+            + (1-2*(self.pos_rel[0]/2))*self.pos[0],
+            self.pos_rel[1]*(self.screen.get_size()[1]/2 - self.rect.height/2)
+            + (1-2*(self.pos_rel[1]/2))*self.pos[1],
+            )
+
+    def print_text(self, text, pos=None):
+        self.text = text
+        if pos:
+            self.pos = pos
+        self.rerender()
+
+    def rerender(self):
+        self.image = self.font.render(self.text, self.antialias, self.color)
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
- 
-        # -- Attributes
-        # Set speed vector
-        self.change_x = 0
-        self.change_y = 0
-
-
-
+        self.rect.x, self.rect.y = self.calculate_position()
 
 def main():
     # Call this function so the Pygame library can initialize itself
     pygame.init()
     print("initalizing")
 
+    WHITE = (255, 255, 255)
+    green= (124, 252, 0)
     width=640 
     height=480
     #create screen
@@ -244,6 +283,7 @@ def main():
     pygame.display.set_caption('python!')
     background_image = pygame.image.load("landscape.png").convert_alpha()
     background_image.set_alpha(10)
+    
     
     #create Pore object with Pore(x,y) x, y = position on screen
     block_list = pygame.sprite.Group()
@@ -301,7 +341,14 @@ def main():
     print(f'added player to all_sprites: {all_sprites_list}')
 
     #DNA object
-    nt_seq = []
+    
+    nt_seq_list = pygame.sprite.Group()
+    nt_load = ['ATG', 'GGC', 'GCA', 'TTA']
+    for nt in nt_load:
+        nt_trail = Trail(screen, nt) #figure out how to put in player.trail -1 as coordinates
+        nt_seq_list.add(nt_trail)
+        print(nt_seq_list)
+
 
     clock = pygame.time.Clock()
     done = False
@@ -332,15 +379,7 @@ def main():
             collisions = pygame.sprite.spritecollide(player, block_list, True)
             if collisions:
                 print('oh no')
-            
-
-        #collisions
-        #define collision
-        
-        
-        #add an if for you removed all the blcoks
-
-        #if pass through pore boundaries, add nt
+                return
  
     # --- Game logic
      
@@ -348,21 +387,21 @@ def main():
         all_sprites_list.update()
  
     # -- Draw everything
-    # background 
-        #screen.fill(WHITE)
- 
+    
     # Draw sprites
-        screen.blit(background_image, [0,0])
+        
         all_sprites_list.draw(screen)
         block_list.draw(screen)
-        
+        #nt_seq_list.draw(screen)
+        #pygame.draw.lines(screen, (RBG), False, player.trail)
+        screen.blit(background_image, [0,0])
         
  
     # Flip screen
         pygame.display.flip()
  
     # Pause
-        clock.tick(60)
+        clock.tick(30)
  
     pygame.quit()
 

@@ -18,11 +18,11 @@ class Hero(pygame.sprite.Sprite):
                 self.image = pygame.image.load('images/hero.png')
                 self.x = x/2
                 self.y = y/2
-                self.width = 100
-                self.height = 100
+                self.width = 32
+                self.height = 32
                 self.image = pygame.transform.scale(self.image, (self.width, self.height))
                 self.rect = self.image.get_rect(center=(self.x, self.y))
- 
+
         def moveRight(self, pixels):
                 self.rect.x += pixels
  
@@ -152,7 +152,7 @@ def main():
                 hero.moveBack(10)
 
         seqfound = hero.rect.colliderect(hiddenseq1.rect)
-        if seqfound:
+        if seqfound: 
                 wildseqfound = mixer.Sound('sounds/06-caught-a-pokemon.mp3')
                 wildseqfound.play()
                 wild(seqfound)
@@ -161,8 +161,8 @@ def main():
         if brokenseqfound:
                 brokenseqfound = mixer.Sound('sounds/spongebob-boowomp.mp3')
                 brokenseqfound.play()
-                broken(brokenseqfound) 
-                pygame.display.update()
+                broken(brokenseqfound)
+                hero.update() 
                
 
         all_sprites_list.update()

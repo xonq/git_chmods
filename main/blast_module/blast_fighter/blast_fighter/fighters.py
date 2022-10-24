@@ -6,8 +6,7 @@ import random
 
 # make fighter class
 
-simonisms = ['S H I T', 'Oof', 'great form', 'Yikes', 'wanker',
-             'buy me a drink first', 'bloody hell']
+simonisms = ['S H I T', 'quit your whinging', 'wanker', 'bloody hell']
 
 class Fighter():
     def __init__(self, player, x, y, flip, data, sprite_sheet, animation_steps):
@@ -45,10 +44,9 @@ class Fighter():
         return animation_list
     def draw(self, surface):
         img = pygame.transform.flip(self.image, self.flip, False)
-        pygame.draw.rect(surface, (255, 0, 0), self.rect)
         surface.blit(img, (self.rect.x - (self.image_offset[0] * self.image_scale), self.rect.y - (self.image_offset[1] * self.image_scale)))
 
-    def move(self, screen_width, screen_height, surface, target):
+    def move(self, screen_width, screen_height, target):
         SPEED = 10
         GRAVITY = 2
         dx = 0
@@ -78,7 +76,7 @@ class Fighter():
 
                 #attacks
                 if key[pygame.K_r] or key[pygame.K_t]:
-                    self.attack(surface, target)
+                    self.attack(target)
 
                     #which attack type is used
                     if key[pygame.K_r]:
@@ -103,7 +101,7 @@ class Fighter():
 
                 #attacks
                 if key[pygame.K_KP1] or key[pygame.K_KP2]:
-                    self.attack(surface, target)
+                    self.attack(target)
 
                     #which attack type is used
                     if key[pygame.K_KP1]:
@@ -184,7 +182,7 @@ class Fighter():
                     self.attack_cooldown = 20
 
         #define attack method
-    def attack(self, surface, target):
+    def attack(self, target):
         if self.attack_cooldown == 0:
             self.attacking = True
             attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.rect.height) #makes attack surface 2x the player
@@ -194,7 +192,6 @@ class Fighter():
                 target.health -= 10
                 target.hit = True
 
-            pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
     def update_action(self, new_action):
         #check if new action is different than previous

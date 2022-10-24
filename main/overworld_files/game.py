@@ -28,10 +28,28 @@ class Game:
         self.Simon = Simon
         sign = NPC(12, 10, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/sign.png')
         self.sign = sign
+        Zach = NPC(1, 13, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/Zach.png')
+        self.Zach = Zach
+        mushroom = NPC(2, 13, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/mushroom.png')
+        self.mushroom = mushroom
+        Sofia = NPC(100, 102, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/Sofia.png')
+        self.Sofia = Sofia
+        Snake = NPC(105, 105, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/overworld_snake.png')
+        self.Snake = Snake
+        computer = NPC(200, 200, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/computer.png')
+        self.computer = computer
+        arch = NPC(17, 0, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/arch.png')
+        self.arch = arch
         self.objects.append(player)
         self.objects.append(Reed)
         self.objects.append(Simon)
         self.objects.append(sign)
+        self.objects.append(Zach)
+        self.objects.append(mushroom)
+        self.objects.append(Sofia)
+        self.objects.append(Snake)
+        self.objects.append(computer)
+        self.objects.append(arch)
         print(self.objects)
         print('do set up')
         self.game_state = GameState.RUNNING
@@ -55,7 +73,13 @@ class Game:
         # all NPCs and game object position info
         positions_dict = {'Reed': self.Reed.position,
                           'Simon': self.Simon.position,
-                          'sign': self.sign.position
+                          'sign': self.sign.position,
+                          'Zach': self.Zach.position,
+                          'mushroom': self.mushroom.position,
+                          'Sofia': self.Sofia.position,
+                          'Snake': self.Snake.position,
+                          'computer': self.computer.position,
+                          'arch': self.arch.position
                           }
 
         for event in pygame.event.get():
@@ -86,11 +110,29 @@ class Game:
                             self.Reed.position = [100, 100]
                             self.Reed.update_position(self.Reed.position)
                         if next_room == 'sequencing_center':
-                            self.Simon.position = [9, 6]
+                            self.Simon.position = [5, 6]
                             self.Simon.update_position(self.Simon.position)
                         if next_room == 'sequencing_center':
                             self.sign.position = [100, 101]
                             self.sign.update_position(self.sign.position)
+                        if next_room == 'sequencing_center':
+                            self.Zach.position = [100, 101]
+                            self.Zach.update_position(self.Zach.position)
+                        if next_room == 'sequencing_center':
+                            self.mushroom.position = [100, 101]
+                            self.mushroom.update_position(self.mushroom.position)
+                        if next_room == 'sequencing_center':
+                            self.Sofia.position = [11, 7]
+                            self.Sofia.update_position(self.Sofia.position)
+                        if next_room == 'sequencing_center':
+                            self.Snake.position = [1, 1]
+                            self.Snake.update_position(self.Snake.position)
+                        if next_room == 'sequencing_center':
+                            self.computer.position = [2, 12]
+                            self.computer.update_position(self.computer.position)
+                        if next_room == 'sequencing_center':
+                            self.arch.position = [300, 300]
+                            self.arch.update_position(self.arch.position)
 
 
                 # down
@@ -117,8 +159,27 @@ class Game:
                             self.Simon.position = [100, 100]
                             self.Simon.update_position(self.Simon.position)
                         if next_room == 'overworld':
-                            self.Reed.position = [12, 10]
-                            self.Reed.update_position(self.Reed.position)
+                            self.sign.position = [12, 10]
+                            self.sign.update_position(self.sign.position)
+                        if next_room == 'overworld':
+                            self.Zach.position = [1, 13]
+                            self.Zach.update_position(self.Zach.position)
+                        if next_room == 'overworld':
+                            self.mushroom.position = [2, 13]
+                            self.mushroom.update_position(self.mushroom.position)
+                        if next_room == 'overworld':
+                            self.Sofia.position = [101, 103]
+                            self.Sofia.update_position(self.Sofia.position)
+                        if next_room == 'overworld':
+                            self.Snake.position = [101, 105]
+                            self.Snake.update_position(self.Snake.position)
+                        if next_room == 'overworld':
+                            self.computer.position = [102, 105]
+                            self.computer.update_position(self.computer.position)
+                        if next_room == 'overworld':
+                            self.arch.position = [17, 0]
+                            self.arch.update_position(self.arch.position)
+
 
 
 
@@ -219,6 +280,42 @@ class Game:
                 print(sign_text)
                 pygame.display.set_caption(sign_text)
 
+        if player_position in possible_interaction_positions:
+            print('INTERACTION!')
+            if positions_dict['Zach'][0] + 1 == player_position[0] or positions_dict['Zach'][0] - 1 == player_position[0] or positions_dict['Zach'][1] - 1 == player_position[1] or positions_dict['Zach'][1] + 1 == player_position[1]:
+                print(Zach_text)
+                pygame.display.set_caption(Zach_text)
+
+        if player_position in possible_interaction_positions:
+            print('INTERACTION!')
+            if positions_dict['mushroom'][0] + 1 == player_position[0] or positions_dict['mushroom'][0] - 1 == player_position[0] or positions_dict['mushroom'][1] - 1 == player_position[1] or positions_dict['mushroom'][1] + 1 == player_position[1]:
+                print(mushroom_text)
+                pygame.display.set_caption(mushroom_text)
+
+        if player_position in possible_interaction_positions:
+            print('INTERACTION!')
+            if positions_dict['Sofia'][0] + 1 == player_position[0] or positions_dict['Sofia'][0] - 1 == player_position[0] or positions_dict['Sofia'][1] - 1 == player_position[1] or positions_dict['Sofia'][1] + 1 == player_position[1]:
+                print(Sofia_text)
+                pygame.display.set_caption(Sofia_text)
+
+        if player_position in possible_interaction_positions:
+            print('INTERACTION!')
+            if positions_dict['Snake'][0] + 1 == player_position[0] or positions_dict['Snake'][0] - 1 == player_position[0] or positions_dict['Snake'][1] - 1 == player_position[1] or positions_dict['Snake'][1] + 1 == player_position[1]:
+                print(Snake_text)
+                pygame.display.set_caption(Snake_text)
+
+        if player_position in possible_interaction_positions:
+            print('INTERACTION!')
+            if positions_dict['computer'][0] + 1 == player_position[0] or positions_dict['computer'][0] - 1 == player_position[0] or positions_dict['computer'][1] - 1 == player_position[1] or positions_dict['computer'][1] + 1 == player_position[1]:
+                print(computer_text)
+                pygame.display.set_caption(computer_text)
+
+        if player_position in possible_interaction_positions:
+            print('INTERACTION!')
+            if positions_dict['arch'][0] + 1 == player_position[0] or positions_dict['arch'][0] - 1 == player_position[0] or positions_dict['arch'][1] - 1 == player_position[1] or positions_dict['arch'][1] + 1 == player_position[1]:
+                print(arch_text)
+                pygame.display.set_caption(arch_text)
+
 
 
 
@@ -229,11 +326,13 @@ class Game:
 
 Reed_text = "Reed: PAULY, I'm standing here!"
 Simon_text = "Simon: Welcome to our Sequencing Center!"
-sign_text = "Sign: Simon and Sofia's Sequencing Center"
-
-
-
-
+sign_text = "Simon and Sofia's Sequencing Center"
+Zach_text = "Zach: Dude, check out this mushroom. Its biosynthetic gene clusters probably coevolved..."
+mushroom_text = "mushroom: First, you should probably collect a DNA sample"
+Sofia_text = "Sofia: If you have a sequencing sample, you should run it in the Nanopore! Talk to the snake"
+Snake_text = "snake: Hey if you have a sequencing sample I'll run it, dude. Press K again and I'll do it!"
+computer_text = "computer: Hello, organic user. If you press K again, you can try to assemble your reads."
+arch_text = "arch: Yo go through me and you might get some hecking DNA. Press K to enter."
 
 
 

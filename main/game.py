@@ -1,12 +1,10 @@
-import pygame
-import subprocess
-
 import pygame.font
 from pygame_functions import *
 import config
 from player import Player
 from player import NPC
 from game_state import GameState
+
 
 
 class Game:
@@ -22,23 +20,23 @@ class Game:
     def set_up(self):
         player = Player(1, 1)
         self.player = player
-        Reed = NPC(5, 5, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/Reed.png')
+        Reed = NPC(5, 5, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/Reed.png')
         self.Reed = Reed
-        Simon = NPC(100, 100, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/Simon.png')
+        Simon = NPC(100, 100, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/Simon.png')
         self.Simon = Simon
-        sign = NPC(12, 10, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/sign.png')
+        sign = NPC(12, 10, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/sign.png')
         self.sign = sign
-        Zach = NPC(1, 13, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/Zach.png')
+        Zach = NPC(1, 13, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/Zach.png')
         self.Zach = Zach
-        mushroom = NPC(2, 13, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/mushroom.png')
+        mushroom = NPC(2, 13, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/mushroom.png')
         self.mushroom = mushroom
-        Sofia = NPC(100, 102, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/Sofia.png')
+        Sofia = NPC(100, 102, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/Sofia.png')
         self.Sofia = Sofia
-        Snake = NPC(105, 105, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/overworld_snake.png')
+        Snake = NPC(105, 105, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/overworld_snake.png')
         self.Snake = Snake
-        computer = NPC(200, 200, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/computer.png')
+        computer = NPC(200, 200, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/computer.png')
         self.computer = computer
-        arch = NPC(17, 0, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/arch.png')
+        arch = NPC(17, 0, '/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/arch.png')
         self.arch = arch
         self.objects.append(player)
         self.objects.append(Reed)
@@ -110,7 +108,7 @@ class Game:
                             self.Reed.position = [100, 100]
                             self.Reed.update_position(self.Reed.position)
                         if next_room == 'sequencing_center':
-                            self.Simon.position = [5, 6]
+                            self.Simon.position = [18, 13]
                             self.Simon.update_position(self.Simon.position)
                         if next_room == 'sequencing_center':
                             self.sign.position = [100, 101]
@@ -128,7 +126,7 @@ class Game:
                             self.Snake.position = [1, 1]
                             self.Snake.update_position(self.Snake.position)
                         if next_room == 'sequencing_center':
-                            self.computer.position = [2, 12]
+                            self.computer.position = [3, 10]
                             self.computer.update_position(self.computer.position)
                         if next_room == 'sequencing_center':
                             self.arch.position = [300, 300]
@@ -202,7 +200,7 @@ class Game:
 
 
     def load_map(self, file_name):
-        with open ('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/maps/' + file_name + '.txt') as map_file:
+        with open ('/Users/student/PycharmProjects/pythonProject/git_chmods/main/maps/' + file_name + '.txt') as map_file:
             count = 0
             for line in map_file:
                 tiles = []
@@ -350,20 +348,29 @@ arch_text = "arch: Yo go through me and you might get some hecking DNA. Press K 
 
 
 map_tile_image = {
-    'G': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/grass.png'), (config.SCALE, config.SCALE)),
-    'L': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/topLeftPond.png'), (config.SCALE, config.SCALE)),
-    'R': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/topRightPond.png'), (config.SCALE, config.SCALE)),
-    'O': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/bottomLeftPond.png'), (config.SCALE, config.SCALE)),
-    'P': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/bottomRightPond.png'), (config.SCALE, config.SCALE)),
-    'N': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/bottomLeftWall.png'), (config.SCALE, config.SCALE)),
-    'B': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/realBottomWall.png'), (config.SCALE, config.SCALE)),
-    'D': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/door.png'), (config.SCALE, config.SCALE)),
-    'M': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/bottomRightWall.png'), (config.SCALE, config.SCALE)),
-    'l': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/leftWall.png'), (config.SCALE, config.SCALE)),
-    'r': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/rightWall.png'), (config.SCALE, config.SCALE)),
-    'W': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/wall.png'), (config.SCALE, config.SCALE)),
-    'H': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/roof.png'), (config.SCALE, config.SCALE)),
-    'S': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/sign.png'), (config.SCALE, config.SCALE)),
-    'Z': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/overworld_files/images/sequencingCenterFloor.png'), (config.SCALE, config.SCALE)),
+    'G': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/grass.png'), (config.SCALE, config.SCALE)),
+    'L': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/topLeftPond.png'), (
+    config.SCALE, config.SCALE)),
+    'R': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/topRightPond.png'), (
+    config.SCALE, config.SCALE)),
+    'O': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/bottomLeftPond.png'), (
+    config.SCALE, config.SCALE)),
+    'P': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/bottomRightPond.png'), (
+    config.SCALE, config.SCALE)),
+    'N': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/bottomLeftWall.png'), (
+    config.SCALE, config.SCALE)),
+    'B': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/realBottomWall.png'), (
+    config.SCALE, config.SCALE)),
+    'D': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/door.png'), (config.SCALE, config.SCALE)),
+    'M': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/bottomRightWall.png'), (
+    config.SCALE, config.SCALE)),
+    'l': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/leftWall.png'), (config.SCALE, config.SCALE)),
+    'r': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/rightWall.png'), (
+    config.SCALE, config.SCALE)),
+    'W': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/wall.png'), (config.SCALE, config.SCALE)),
+    'H': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/roof.png'), (config.SCALE, config.SCALE)),
+    'S': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/sign.png'), (config.SCALE, config.SCALE)),
+    'Z': pygame.transform.scale(pygame.image.load('/Users/student/PycharmProjects/pythonProject/git_chmods/main/images/sequencingCenterFloor.png'), (
+    config.SCALE, config.SCALE)),
 
                   }

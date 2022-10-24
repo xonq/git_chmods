@@ -5,6 +5,7 @@ import pygame
 import os
 import sys
 import math
+from pygame import mixer
  
 # Global Variables
 x = 640
@@ -37,7 +38,7 @@ class Hero(pygame.sprite.Sprite):
 class HideWildSeq(pygame.sprite.Sprite):
         def __init__(self):
                 super().__init__()
-                self.image = pygame.image.load('images/grass.png')
+                self.image = pygame.image.load('images/stage-seq1.png')
                 self.x = 50
                 self.y = 220
                 self.width = 62
@@ -49,7 +50,7 @@ class HideBrokenSeq(pygame.sprite.Sprite):
         def __init__(self):
                 super().__init__()
                 self.image = pygame.image.load('images/stage-seq2.png')
-                self.x = 480
+                self.x = 540
                 self.y = 400
                 self.width = 68
                 self.height = 62
@@ -71,7 +72,7 @@ class BrokenSeq(pygame.sprite.Sprite):
         def __init__(self):
                 super().__init__()
                 self.image = pygame.image.load('images/wildbrokenviralseq.png')
-                self.x = 480
+                self.x = 540
                 self.y = 400
                 self.width = 300
                 self.height = 20
@@ -81,10 +82,13 @@ class BrokenSeq(pygame.sprite.Sprite):
 def main(): 
  pygame.init()
  clock = pygame.time.Clock()
+ #background
  size = (x, y)
  screen = pygame.display.set_mode(size)
  background =pygame.image.load('images/stage.png')
-
+ mixer.music.load('sounds/minuet-of-forest.mp3')
+ mixer.music.set_volume(0.25)
+ mixer.music.play(-1) 
 
  all_sprites_list = pygame.sprite.Group()
  hero = Hero()
@@ -103,14 +107,28 @@ def main():
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
  def message_display(text):
-        popuptext = pygame.font.SysFont('gilsans', 32)
+        popuptext = pygame.font.SysFont('gilsans', 42)
         TextSurf, TextRect = text_object(text, popuptext)
         TextRect.center = ((x/2), (y/2))
+        screen.fill((250, 250, 250))
         screen.blit(TextSurf, TextRect)
-
         pygame.display.update()
-	
- 
+
+ def wild(collision):
+        wild_sprite_list.draw(screen)
+        pygame.display.update()
+        pygame.time.delay(1000)
+        message_display("You've Found a Wild Sequence")
+        pygame.time.delay(2000)
+        sys.exit()
+
+ def broken(collision):
+        wild_broken_sprite_list.draw(screen)
+        pygame.display.update()
+        pygame.time.delay(1000)
+        message_display("Found broken sequence! Try again!")
+        pygame.time.delay(1500)
+
  run = True
 
  while run:
@@ -135,23 +153,17 @@ def main():
 
         seqfound = hero.rect.colliderect(hiddenseq1.rect)
         if seqfound:
-                wild_sprite_list.draw(screen)
-                pygame.display.update()
-                pygame.time.delay(1000)
-                screen.fill((250, 250, 250))
-                message_display("You've found a wild sequence!")
-                pygame.time.delay(2000)
-                sys.exit()
+                wildseqfound = mixer.Sound('sounds/06-caught-a-pokemon.mp3')
+                wildseqfound.play()
+                wild(seqfound)
 
-        brokenseqfound = hero.rect.colliderect(wildbrokenseq.rect)
+        brokenseqfound = hero.rect.colliderect(hiddenseq2.rect)
         if brokenseqfound:
-                wild_broken_sprite_list.draw(screen)
+                brokenseqfound = mixer.Sound('sounds/spongebob-boowomp.mp3')
+                brokenseqfound.play()
+                broken(brokenseqfound) 
                 pygame.display.update()
-                pygame.time.delay(1000)
-                screen.fill((250, 250, 250))
-                message_display("You've found a broken sequence, try again")
-                pygame.time.delay(2000)
-
+               
 
         all_sprites_list.update()
         screen.fill((0, 0, 0))
@@ -164,4 +176,4 @@ def main():
  pygame.quit()
 
 if __name__ == "__main__":
-	main()
+      main()
